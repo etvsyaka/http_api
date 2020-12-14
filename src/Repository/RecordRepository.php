@@ -14,11 +14,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class RecordRepository extends ServiceEntityRepository
 {
+    /**
+     * RecordRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Record::class);
     }
 
+    /**
+     * @param array $idents
+     * @return array
+     */
     public function getNotExistingRecords(array $idents = []): array
     {
         $qb = $this->createQueryBuilder('r')
@@ -32,6 +40,11 @@ class RecordRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @param array $idents
+     * @param array $versions
+     * @return int|mixed|string
+     */
     public function getUpdatedRecords(array $idents = [], array $versions = [])
     {
         $qb = $this->createQueryBuilder('r');
@@ -48,6 +61,10 @@ class RecordRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @param array $idents
+     * @return int|mixed|string
+     */
     public function getNotFilledRecords(array $idents = [])
     {
         $qb = $this->createQueryBuilder('r');

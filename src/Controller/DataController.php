@@ -8,7 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\RecordRepository;
 
-
+/**
+ * Class DataController
+ * @package App\Controller
+ */
 class DataController extends AbstractController
 {
     /**

@@ -27,11 +27,18 @@ class Record
      */
     private $version;
 
+    /**
+     * @return string|null
+     */
     public function getIdent(): ?string
     {
         return $this->ident;
     }
 
+    /**
+     * @param string $ident
+     * @return $this
+     */
     public function setIdent(string $ident): self
     {
         $this->ident = $ident;
@@ -39,11 +46,18 @@ class Record
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getValue(): ?string
     {
         return $this->value;
     }
 
+    /**
+     * @param string $value
+     * @return $this
+     */
     public function setValue(string $value): self
     {
         $this->value = $value;
@@ -51,11 +65,18 @@ class Record
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getVersion(): ?int
     {
         return $this->version;
     }
 
+    /**
+     * @param int $version
+     * @return $this
+     */
     public function setVersion(int $version): self
     {
         $this->version = $version;
