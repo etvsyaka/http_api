@@ -10,14 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Record
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
+     * @ORM\Id
      * @ORM\Column(type="string", length=32)
      */
     private $ident;
@@ -31,11 +26,6 @@ class Record
      * @ORM\Column(type="integer")
      */
     private $version;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getIdent(): ?string
     {

@@ -19,32 +19,40 @@ class RecordRepository extends ServiceEntityRepository
         parent::__construct($registry, Record::class);
     }
 
-    // /**
-    //  * @return Record[] Returns an array of Record objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getNotExistingRecords(array $idents = []): array
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('r')
+            ->select('r.ident');
 
-    /*
-    public function findOneBySomeField($value): ?Record
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $recordsIdents =  array_map(function($el) {
+            return $el['ident'];
+        }, $qb->getQuery()->getScalarResult());
+
+        return array_diff($idents, $recordsIdents);
     }
-    */
+
+
+    public function getUpdatedRecords(array $idents = [], array $versions = [])
+    {
+        $qb = $this->createQueryBuilder('r');
+        $expr = $qb->expr();
+
+        foreach ($idents as $index => $ident) {
+            $qb
+                ->andWhere('r.ident = :ident')
+                ->setParameter('ident', $ident)
+                ->andWhere($expr->gt('r.version', $versions[$index]));
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+    public function getNotFilledRecords(array $idents = [])
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb->andWhere($qb->expr()->notIn('r.ident', $idents));
+        
+        return $qb->getQuery()->getResult();
+    }
 }
