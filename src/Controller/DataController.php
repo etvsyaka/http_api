@@ -16,15 +16,10 @@ class DataController extends AbstractController
      */
     public function index(Request $request, RecordRepository $recordRepository): Response
     {
-        
-        dump(
-            $recordRepository->getNotExistingRecords($request->query->get('ident')),
-            $recordRepository->getUpdatedRecords($request->query->get('ident'), $request->query->get('version')),
-            $recordRepository->getNotFilledRecords($request->query->get('ident'))
-        );exit;
         return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/DataController.php',
+            'delete' => $recordRepository->getNotExistingRecords($request->query->get('ident')),
+            'update' => $recordRepository->getUpdatedRecords($request->query->get('ident'), $request->query->get('version')),
+            'new'    => $recordRepository->getNotFilledRecords($request->query->get('ident')),
         ]);
     }
 }
